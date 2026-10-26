@@ -1,0 +1,47 @@
+{
+  "rom_sha256": "12d5ff9cbefb303a6c626caab68889b19bac7a3a0f032806b796255ec0d36306",
+  "core_sha256": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+  "mods": "mods/",
+  "states": {
+    "gameplay": {
+      "frame": 1418,
+      "state_sha256": "d80e7679e8e64004e69ceaf5023d448ac2b432db95274328a484f0e585af2286",
+      "helper_tag": 0,
+      "kirby_ability": 0,
+      "kirby_tag": 0
+    },
+    "beam": {
+      "frame": 2244,
+      "state_sha256": "647c4f3f2c7004783672a029e418c362646135965c2fee2e09bf5c49944ca458",
+      "helper_tag": 0,
+      "kirby_ability": 2,
+      "kirby_tag": 0
+    },
+    "blaster": {
+      "frame": 2454,
+      "state_sha256": "5ea84b4d88142617637e6f5c366b2c67b825613bbe7b3b5d117acbca7c21f77e",
+      "helper_tag": 1,
+      "kirby_ability": 0,
+      "kirby_tag": 0
+    },
+    "prehurt_input": {
+      "p1": "RIGHT + B for 4 of every 10 frames",
+      "start_phase": 471,
+      "hit_after": 30
+    },
+    "prehurt": {
+      "frame": 2925,
+      "state_sha256": "7a2fd77fe123be2788c9f089c52e3130a3d0be29f6852519adde4aabaa781bf5",
+      "helper_tag": 1,
+      "kirby_ability": 0,
+      "kirby_tag": 0
+    },
+    "magnet": {
+      "frame": 2417,
+      "state_sha256": "1dc6d7beadf8128be41fa83b87ad331ad8d434345cd578d64041a9415cf0dac2",
+      "helper_tag": 0,
+      "kirby_ability": 0,
+      "kirby_tag": 0
+    }
+  }
+}

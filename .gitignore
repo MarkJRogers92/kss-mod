@@ -1,0 +1,21 @@
+# Built binaries
+*.dylib
+*.o
+frontend/kss-native
+frontend/tests/unit_tests
+# Save states hold game memory and are rebuilt by `fixtures.py build ROM`
+*.state
+# Generated output
+out-*/
+dumps/
+frontend/test-out/
+*.ppm
+__pycache__/
+# Pre-expansion backups (history now lives in git)
+backup-*/
+# Scenario runs (reports, captures, tapes)
+scenarios/out/
+
+# Fetched by tools/get_runtime.sh (upstream code, not redistributed here)
+snes_runtime.c
+snes_runtime.h

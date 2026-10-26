@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "title": "Deuce co-op: P2 joins and throws a card while Kirby changes ability",
+  "provenance": "natural",
+  "build": "../../kss-deuce/build",
+  "checkpoint": "green-deuce-created",
+  "mods": true,
+  "expansion": true,
+  "preconditions": [
+    {"field": "helper_form", "op": "==", "value": 2},
+    {"field": "helper_type", "op": "in", "value": [2, 3]}
+  ],
+  "input": [
+    [20, [], []],
+    [3, [], ["Y"]],
+    [40, [], []],
+    [12, [], ["LEFT"]],
+    [8, [], []],
+    [3, [], ["Y"]],
+    [6, [], []],
+    [2, ["SELECT", "RIGHT"], []],
+    [60, [], []]
+  ],
+  "limits": {"max_frames": 400, "wall_seconds": 60},
+  "captures": [94],
+  "assertions": [
+    {"name": "a Deuce card is thrown", "field": "helper_shot_forms", "op": "contains", "value": 2, "when": "ever"},
+    {"name": "no other helper form's shot appears", "field": "helper_shot_forms", "op": "not in", "value": [[1], [3], [1, 2], [2, 3]], "when": "always"},
+    {"name": "helper stays Deuce throughout", "field": "helper_form", "op": "==", "value": 2, "when": "always"},
+    {"name": "Kirby's dial moved off Jackpot", "field": "kirby_tag", "op": "!=", "value": 7, "when": "end"}
+  ]
+}

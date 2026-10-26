@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "name": "green-bolt-created",
+  "provenance": "natural",
+  "route": "green-bolt-created.route.json",
+  "route_sha256": "50174f1ab34e84aef8f05a90a47979a50d6e6a58f86df095cab9c3ffb0923039",
+  "state_sha256": "48050a97145a35a208b325684a963005dd63a36663acab7bb59c6b3e4f6adbc6",
+  "identity": {
+    "rom": "c443b61a44858bd20a91d23497ce956f446ac4239979fe999f0d893de046bddd",
+    "core_source": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+    "library": "d46ec60048e4ab2a634996d7765bbd2a27c124ccb44d6532ab2400d4ccdd6803",
+    "mods": "9d848c8c671469362e7db4bb79b038f11f5940684a5d28205228883a6d4a364a",
+    "schema": 1,
+    "expansion": "dfe7495b6846dd7fcf9829c9dd21e1b1cd6f5c560b68e386cefb46178bbb228d"
+  },
+  "observed": {
+    "frame": 2417,
+    "kirby_ability": 0,
+    "kirby_tag": 0,
+    "kirby_hp": 68,
+    "helper_type": 3,
+    "helper_ability": 2,
+    "helper_hp": 37,
+    "helper_x": 116,
+    "helper_y": 154,
+    "helper_pose": 88,
+    "helper_form": 6,
+    "helper_gen": 1,
+    "helper_magic": 19272,
+    "subgame": 0,
+    "level": 0,
+    "room": 1,
+    "helper_shots": []
+  }
+}

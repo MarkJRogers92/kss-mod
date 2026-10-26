@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "name": "green-pip-created",
+  "provenance": "natural",
+  "route": "green-pip-created.route.json",
+  "route_sha256": "fcc62b7d359026f8562a5d4609c2ac4a8ed6f52ec594cfae788a5263ded0295b",
+  "state_sha256": "90d7c2189a1e8d17696838f1e1ba8c60bdfe560b69d66799c9cd00c5b89a0d3b",
+  "identity": {
+    "rom": "c443b61a44858bd20a91d23497ce956f446ac4239979fe999f0d893de046bddd",
+    "core_source": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+    "library": "d46ec60048e4ab2a634996d7765bbd2a27c124ccb44d6532ab2400d4ccdd6803",
+    "mods": "9d848c8c671469362e7db4bb79b038f11f5940684a5d28205228883a6d4a364a",
+    "schema": 1,
+    "expansion": "dfe7495b6846dd7fcf9829c9dd21e1b1cd6f5c560b68e386cefb46178bbb228d"
+  },
+  "observed": {
+    "frame": 2495,
+    "kirby_ability": 0,
+    "kirby_tag": 0,
+    "kirby_hp": 68,
+    "helper_type": 3,
+    "helper_ability": 2,
+    "helper_hp": 37,
+    "helper_x": 116,
+    "helper_y": 154,
+    "helper_pose": 88,
+    "helper_form": 4,
+    "helper_gen": 1,
+    "helper_magic": 19272,
+    "subgame": 0,
+    "level": 0,
+    "room": 1,
+    "helper_shots": []
+  }
+}

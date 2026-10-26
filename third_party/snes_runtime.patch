@@ -1,0 +1,172 @@
+--- a/snes_runtime.c
++++ b/snes_runtime.c
+@@ -1402,4 +1402,20 @@
+   }
+   return false;
++}
++
++/* KSS-MOD: native-only expansion ROM. Banks 70-7D are unmapped for both the
++ * S-CPU and the SA-1 on this board; when an expansion image is loaded they read
++ * it (full 64 KiB banks, read-only), otherwise they stay open bus. Static data
++ * like the ROM, so it is not part of save states. */
++#define KSS_XROM_BANK0 0x70
++#define KSS_XROM_BANKS 14
++static uint8_t *g_kss_xrom;
++static uint32_t g_kss_xrom_size;
++
++static bool kss_xrom_offset(uint8_t bank, uint16_t address, uint32_t *offset) {
++  if (!g_kss_xrom || bank < KSS_XROM_BANK0 ||
++      bank >= KSS_XROM_BANK0 + KSS_XROM_BANKS) return false;
++  *offset = ((uint32_t)(bank - KSS_XROM_BANK0) << 16) | address;
++  return *offset < g_kss_xrom_size;
+ }
+ 
+@@ -1410,4 +1426,5 @@
+   uint32_t logical;
+   bool low_window;
++  if (kss_xrom_offset(bank, address, &logical)) return g_kss_xrom[logical];
+   if (!sa1->rom || !sa1->rom_size ||
+       !rom_logical_offset(bank, address, &logical, &low_window))
+@@ -1421,4 +1438,5 @@
+   uint32_t logical;
+   bool low_window;
++  if (kss_xrom_offset(bank, address, &logical)) return &g_kss_xrom[logical];
+   if (!sa1->rom || !sa1->rom_size ||
+       !rom_logical_offset(bank, address, &logical, &low_window))
+@@ -3000,4 +3018,5 @@
+ }
+ 
++void kss_mods_bg_frame(const uint16_t* vram); /* KSS-MOD */
+ void ppu_runLine(Ppu* ppu, int line) {
+   if(line == 0) {
+@@ -3012,4 +3031,5 @@
+ 
+ 
++    kss_mods_bg_frame(ppu->vram);
+     // pre-render line
+     // TODO: this now happens halfway into the first line
+@@ -3165,4 +3185,15 @@
+ 
+ // Draw a whole line of a 4bpp background layer into bgBuffers
++/* KSS-MOD: background tile overrides (content-matched replacement tiles).
++ * Rebuilt by kss_mods_bg_frame() at line 0; NULL entries read live VRAM. */
++extern const uint16_t* kss_ovr4[2048];
++extern const uint16_t* kss_ovr2[4096];
++void kss_mods_bg_frame(const uint16_t* vram);
++static inline const uint16_t* kss_bg4(Ppu* ppu, uint32_t a) {
++  a &= 0x7fff; const uint16_t* r = kss_ovr4[a >> 4]; return r ? r + (a & 15) : &ppu->vram[a];
++}
++static inline const uint16_t* kss_bg2(Ppu* ppu, uint32_t a) {
++  a &= 0x7fff; const uint16_t* r = kss_ovr2[a >> 3]; return r ? r + (a & 7) : &ppu->vram[a];
++}
+ static void PpuDrawBackground_4bpp(Ppu *ppu, uint y, bool sub, uint layer, PpuZbufType zhi, PpuZbufType zlo) {
+ #define DO_PIXEL(i) do { \
+@@ -3173,5 +3204,5 @@
+   if ((bits & (0x80808080 >> i)) && z > dstz[i]) dstz[i] = z + pixel; } while (0)
+ #define READ_TILE_4BPP(ptr) ReadTile4bppWidescreen(ppu, layer, tps, (ptr))
+-#define READ_BITS(ta, tile) (addr = &ppu->vram[((ta) + (tile) * 16) & 0x7fff], addr[0] | addr[8] << 16)
++#define READ_BITS(ta, tile) (addr = kss_bg4(ppu, (ta) + (tile) * 16), addr[0] | addr[8] << 16)
+   enum { kPaletteShift = 6 };
+   if (!IS_SCREEN_ENABLED(ppu, sub, layer))
+@@ -3343,5 +3374,5 @@
+   pixel = (bits >> (7 - i)) & 1 | (bits >> (14 - i)) & 2; \
+   if (pixel && z > dstz[i]) dstz[i] = z + pixel; } while (0)
+-#define READ_BITS(ta, tile) (addr = &ppu->vram[(ta) + (tile) * 8 & 0x7fff], addr[0])
++#define READ_BITS(ta, tile) (addr = kss_bg2(ppu, (ta) + (tile) * 8), addr[0])
+   enum { kPaletteShift = 8 };
+   if (!IS_SCREEN_ENABLED(ppu, sub, layer))
+@@ -3483,5 +3514,5 @@
+ #define GET_PIXEL() pixel = (bits) & 1 | (bits >> 7) & 2 | (bits >> 14) & 4 | (bits >> 21) & 8
+ #define GET_PIXEL_HFLIP() pixel = (bits >> 7) & 1 | (bits >> 14) & 2 | (bits >> 21) & 4 | (bits >> 28) & 8
+-#define READ_BITS(ta, tile) (addr = &ppu->vram[((ta) + (tile) * 16) & 0x7fff], addr[0] | addr[8] << 16)
++#define READ_BITS(ta, tile) (addr = kss_bg4(ppu, (ta) + (tile) * 16), addr[0] | addr[8] << 16)
+   enum { kPaletteShift = 6 };
+   if (!IS_SCREEN_ENABLED(ppu, sub, layer))
+@@ -3542,5 +3573,5 @@
+ #define GET_PIXEL() pixel = (bits) & 1 | (bits >> 7) & 2
+ #define GET_PIXEL_HFLIP() pixel = (bits >> 7) & 1 | (bits >> 14) & 2
+-#define READ_BITS(ta, tile) (addr = &ppu->vram[((ta) + (tile) * 8) & 0x7fff], addr[0])
++#define READ_BITS(ta, tile) (addr = kss_bg2(ppu, (ta) + (tile) * 8), addr[0])
+   enum { kPaletteShift = 8 };
+   if (!IS_SCREEN_ENABLED(ppu, sub, layer))
+@@ -3694,5 +3725,24 @@
+ }
+ 
++/* KSS-MOD: optional per-scanline BG register capture for the tile dumper. */
++typedef struct { uint16_t mode, enabled, tilemap[4], tileadr[4], xsc[4], big[4], hs[4], vs[4]; } KssLineRegs;
++KssLineRegs kss_line_regs[256];
++uint16_t kss_line_cgram[256][256];
++int kss_capture_lines;
++void kss_mods_line(uint16_t* cgram, int line);
++static void kss_capture_line(Ppu* ppu, int y) {
++  kss_mods_line(ppu->cgram, y);
++  if (!kss_capture_lines || y < 0 || y >= 256) return;
++  KssLineRegs* L = &kss_line_regs[y];
++  memcpy(kss_line_cgram[y], ppu->cgram, sizeof ppu->cgram);
++  L->mode = PPU_mode(ppu); L->enabled = ppu->screenEnabled[0] | ppu->screenEnabled[1] << 8;
++  for (int l = 0; l < 4; l++) {
++    L->tilemap[l] = PPU_bgTilemapAdr(ppu, l); L->tileadr[l] = PPU_bgTileAdr(ppu, l);
++    L->xsc[l] = ppu->bgXsc[l] & 3; L->big[l] = PPU_bigTiles(ppu, l) ? 1 : 0;
++    L->hs[l] = ppu->hScroll[l]; L->vs[l] = ppu->vScroll[l];
++  }
++}
+ static void PpuDrawBackgrounds(Ppu *ppu, int y, bool sub) {
++  if (!sub) kss_capture_line(ppu, y);
+   // Top 4 bits contain the prio level, and bottom 4 bits the layer type.
+   // SPRITE_PRIO_TO_PRIO can be used to convert from obj prio to this prio.
+@@ -3832,4 +3882,7 @@
+ }
+ 
++/* KSS-MOD: host sprite hooks (local fork). */
++int kss_mod_obj_hook(int line, int oam1, int x, int row, int size, PpuZbufType* buf, int extra, PpuZbufType zprio);
++int kss_mod_line_end(int line, PpuZbufType* buf, int extra);
+ static bool ppu_evaluateSprites(Ppu* ppu, int line) {
+   static const uint8 spriteSizes[8][2] = {
+@@ -3871,4 +3924,8 @@
+         int palette = (oam1 & 0xe00) >> 9;
+         bool hFlipped = oam1 & 0x4000;
++        {
++          PpuZbufType kss_zp = (PpuZbufType)(SPRITE_PRIO_TO_PRIO((oam1 & 0x3000) >> 12, (oam1 & 0x800) == 0) << 8);
++          if (kss_mod_obj_hook(line, oam1, x, row, spriteSize, ppu->objBuffer.data + kPpuExtraLeftRight, ppu->extraLeftCur, kss_zp)) { index += 2; continue; }
++        }
+         if(oam1 & 0x8000) row = spriteSize - 1 - row;
+         // fetch all tiles in x-range
+@@ -3911,5 +3968,6 @@
+     index += 2;
+   }
+-  return tilesFound != 0;
++  int kss_drew = kss_mod_line_end(line, ppu->objBuffer.data + kPpuExtraLeftRight, ppu->extraLeftCur);
++  return tilesFound != 0 || kss_drew;
+ }
+ 
+@@ -4315,4 +4373,5 @@
+ 
+ void PpuDrawWholeLineOldPpu(Ppu *ppu, int line) {
++  kss_capture_line(ppu, line);
+   // actual line
+   if (PPU_mode(ppu) == 7)
+@@ -4538,5 +4597,5 @@
+   // plane 1 (always)
+   int paletteSize = 4;
+-  uint16_t plane1 = ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + row) & 0x7fff];
++  uint16_t plane1 = (bitDepth == 4 ? kss_bg4(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 16) + row)[0] : bitDepth == 2 ? kss_bg2(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 8) + row)[0] : ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + row) & 0x7fff]);
+   int pixel = (plane1 >> col) & 1;
+   pixel |= ((plane1 >> (8 + col)) & 1) << 1;
+@@ -4544,5 +4603,5 @@
+   if (bitDepth > 2) {
+     paletteSize = 16;
+-    uint16_t plane2 = ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 8 + row) & 0x7fff];
++    uint16_t plane2 = (bitDepth == 4 ? kss_bg4(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 16) + 8 + row)[0] : bitDepth == 2 ? kss_bg2(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 8) + 8 + row)[0] : ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 8 + row) & 0x7fff]);
+     pixel |= ((plane2 >> col) & 1) << 2;
+     pixel |= ((plane2 >> (8 + col)) & 1) << 3;
+@@ -4551,8 +4610,8 @@
+   if (bitDepth > 4) {
+     paletteSize = 256;
+-    uint16_t plane3 = ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 16 + row) & 0x7fff];
++    uint16_t plane3 = (bitDepth == 4 ? kss_bg4(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 16) + 16 + row)[0] : bitDepth == 2 ? kss_bg2(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 8) + 16 + row)[0] : ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 16 + row) & 0x7fff]);
+     pixel |= ((plane3 >> col) & 1) << 4;
+     pixel |= ((plane3 >> (8 + col)) & 1) << 5;
+-    uint16_t plane4 = ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 24 + row) & 0x7fff];
++    uint16_t plane4 = (bitDepth == 4 ? kss_bg4(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 16) + 24 + row)[0] : bitDepth == 2 ? kss_bg2(ppu, PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 8) + 24 + row)[0] : ppu->vram[(PPU_bgTileAdr(ppu, layer) + ((tileNum & 0x3ff) * 4 * bitDepth) + 24 + row) & 0x7fff]);
+     pixel |= ((plane4 >> col) & 1) << 6;
+     pixel |= ((plane4 >> (8 + col)) & 1) << 7;

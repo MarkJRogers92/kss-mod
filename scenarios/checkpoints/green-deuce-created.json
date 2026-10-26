@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "name": "green-deuce-created",
+  "provenance": "natural",
+  "route": "green-deuce-created.route.json",
+  "route_sha256": "88aae55972582c01274cdce4bedeba7ff0281bcc312f0894f1be66818d09602f",
+  "state_sha256": "8cec72d0d94b6b66c0912142b800b0c2a4472d17c89e85c42d36278a85e1d8f3",
+  "identity": {
+    "rom": "c443b61a44858bd20a91d23497ce956f446ac4239979fe999f0d893de046bddd",
+    "core_source": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+    "library": "d46ec60048e4ab2a634996d7765bbd2a27c124ccb44d6532ab2400d4ccdd6803",
+    "mods": "9d848c8c671469362e7db4bb79b038f11f5940684a5d28205228883a6d4a364a",
+    "schema": 1,
+    "expansion": "dfe7495b6846dd7fcf9829c9dd21e1b1cd6f5c560b68e386cefb46178bbb228d"
+  },
+  "observed": {
+    "frame": 2391,
+    "kirby_ability": 0,
+    "kirby_tag": 0,
+    "kirby_hp": 68,
+    "helper_type": 3,
+    "helper_ability": 2,
+    "helper_hp": 37,
+    "helper_x": 116,
+    "helper_y": 154,
+    "helper_pose": 88,
+    "helper_form": 2,
+    "helper_gen": 1,
+    "helper_magic": 19272,
+    "subgame": 0,
+    "level": 0,
+    "room": 1,
+    "helper_shots": []
+  }
+}

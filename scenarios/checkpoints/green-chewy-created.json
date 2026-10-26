@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "name": "green-chewy-created",
+  "provenance": "natural",
+  "route": "green-chewy-created.route.json",
+  "route_sha256": "78ec467000a5b56a6f35d2984b8e0d9229854918ba869dfa06bb5be2c35e98a7",
+  "state_sha256": "ae8fc907453ce546a8be3d971d23a40075707133e32e47622e9bcba088dd5dd7",
+  "identity": {
+    "rom": "c443b61a44858bd20a91d23497ce956f446ac4239979fe999f0d893de046bddd",
+    "core_source": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+    "library": "d46ec60048e4ab2a634996d7765bbd2a27c124ccb44d6532ab2400d4ccdd6803",
+    "mods": "9d848c8c671469362e7db4bb79b038f11f5940684a5d28205228883a6d4a364a",
+    "schema": 1,
+    "expansion": "dfe7495b6846dd7fcf9829c9dd21e1b1cd6f5c560b68e386cefb46178bbb228d"
+  },
+  "observed": {
+    "frame": 2443,
+    "kirby_ability": 0,
+    "kirby_tag": 0,
+    "kirby_hp": 68,
+    "helper_type": 3,
+    "helper_ability": 2,
+    "helper_hp": 37,
+    "helper_x": 116,
+    "helper_y": 154,
+    "helper_pose": 88,
+    "helper_form": 5,
+    "helper_gen": 1,
+    "helper_magic": 19272,
+    "subgame": 0,
+    "level": 0,
+    "room": 1,
+    "helper_shots": []
+  }
+}

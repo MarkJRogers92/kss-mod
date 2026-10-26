@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "title": "Chewy goes through the room-1 door with Kirby and keeps its form",
+  "provenance": "natural",
+  "build": "../../kss-deuce/build",
+  "checkpoint": "green-chewy-created",
+  "mods": true,
+  "expansion": true,
+  "preconditions": [
+    {
+      "field": "helper_form",
+      "op": "==",
+      "value": 5
+    },
+    {
+      "field": "room",
+      "op": "==",
+      "value": 1
+    }
+  ],
+  "input_from": "routes/green-room1-door-room2.json",
+  "input": [
+    [
+      45,
+      256,
+      0
+    ],
+    [
+      4,
+      33024,
+      0
+    ],
+    [
+      81,
+      256,
+      0
+    ],
+    [
+      3,
+      33024,
+      0
+    ],
+    [
+      7,
+      256,
+      0
+    ],
+    [
+      7,
+      33024,
+      0
+    ],
+    [
+      7,
+      256,
+      0
+    ],
+    [
+      7,
+      33024,
+      0
+    ],
+    [
+      180,
+      256,
+      0
+    ],
+    [
+      3,
+      2048,
+      0
+    ],
+    [
+      1,
+      256,
+      0
+    ],
+    [
+      2,
+      0,
+      0
+    ],
+    [
+      29,
+      256,
+      0
+    ],
+    [
+      4,
+      0,
+      0
+    ],
+    [
+      2,
+      2048,
+      0
+    ],
+    [
+      200,
+      0,
+      0
+    ]
+  ],
+  "limits": {
+    "max_frames": 682,
+    "wall_seconds": 120
+  },
+  "assertions": [
+    {
+      "name": "reaches room 2 through the door",
+      "field": "room",
+      "op": "==",
+      "value": 2,
+      "when": "ever"
+    },
+    {
+      "name": "helper is a live helper afterwards",
+      "field": "helper_type",
+      "op": "in",
+      "value": [
+        2,
+        3
+      ],
+      "when": "end"
+    },
+    {
+      "name": "helper keeps its form after the door",
+      "field": "helper_form",
+      "op": "==",
+      "value": 5,
+      "when": "end"
+    },
+    {
+      "name": "never another form",
+      "field": "helper_form",
+      "op": "in",
+      "value": [
+        0,
+        5
+      ],
+      "when": "always"
+    }
+  ]
+}

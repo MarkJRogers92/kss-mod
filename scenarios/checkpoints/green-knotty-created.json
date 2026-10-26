@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "name": "green-knotty-created",
+  "provenance": "natural",
+  "route": "green-knotty-created.route.json",
+  "route_sha256": "dee40dead1e3e7be2c10d9598f68d842cd193493f82503e8ce9596a9828a107f",
+  "state_sha256": "7bbd14ff3477a17bc31cf930d161b08033ccebfcaedb238725d315cc2ae4aa6f",
+  "identity": {
+    "rom": "c443b61a44858bd20a91d23497ce956f446ac4239979fe999f0d893de046bddd",
+    "core_source": "4c1735971c48215d67e7e6927449e09206894378dd305201f95676bf8b6a617a",
+    "library": "d46ec60048e4ab2a634996d7765bbd2a27c124ccb44d6532ab2400d4ccdd6803",
+    "mods": "9d848c8c671469362e7db4bb79b038f11f5940684a5d28205228883a6d4a364a",
+    "schema": 1,
+    "expansion": "dfe7495b6846dd7fcf9829c9dd21e1b1cd6f5c560b68e386cefb46178bbb228d"
+  },
+  "observed": {
+    "frame": 2521,
+    "kirby_ability": 0,
+    "kirby_tag": 0,
+    "kirby_hp": 68,
+    "helper_type": 3,
+    "helper_ability": 2,
+    "helper_hp": 37,
+    "helper_x": 116,
+    "helper_y": 154,
+    "helper_pose": 88,
+    "helper_form": 7,
+    "helper_gen": 1,
+    "helper_magic": 19272,
+    "subgame": 0,
+    "level": 0,
+    "room": 1,
+    "helper_shots": []
+  }
+}

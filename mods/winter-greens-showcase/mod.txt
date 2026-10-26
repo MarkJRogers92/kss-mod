@@ -1,0 +1,59 @@
+# Winter Green Greens, observed main route. Exact indexed art, five disjoint content scopes.
+rule tiles winter-opening
+scope tiles
+tilepack opening.ktp
+cgram_lines 1 168 0x41 20E3 2D45 3DAD 5673 39A7 4609 5AAE 6712 7375 5AB1 7798 7BBA 7FDC 7FFD 7FFE
+cgram_lines 1 168 0x51 18C2 55E9
+cgram_lines 1 168 0x54 2123 35C6 7BBB 420B 3E98 626D
+cgram_lines 1 168 0x5B 5EF0 7778 7FFE 5F9E 7FFE
+cgram_lines 1 168 0x63 24E5 2926 3D68 2525 41AB 4DEC 5A70 25B1 3257 6AF4 3EBA 4AFB 575D
+cgram_lines 1 168 0x73 24E3
+cgram_lines 1 168 0x75 2D65
+cgram_lines 1 168 0x79 35C7
+cgram_lines 1 168 0x7C 5EF1 77B9
+cgram_lines 1 168 0x7F 7FFD
+
+rule tiles winter-terrain
+scope tiles
+tilepack terrain.ktp
+cgram_lines 1 168 0x12 1CE3 2525
+cgram_lines 1 168 0x15 3587 526D
+cgram_lines 1 168 0x18 6F57 77BA 7BBB
+cgram_lines 1 168 0x1C 7FFD
+cgram_lines 1 168 0x23 2526 62F2
+cgram_lines 1 168 0x26 77BA
+cgram_lines 1 168 0x28 5AB0 7BDC
+cgram_lines 1 168 0x2C 7FFD 6B35 7FFE 7FFE
+
+rule tiles winter-forest
+scope tiles
+tilepack forest.ktp
+cgram_lines 1 168 0x07 5AB1 2926 7BBB 4A2D 7378 6F57 7FFD 3589 6B35
+cgram_lines 1 168 0x51 0820 0821
+cgram_lines 1 168 0x54 1483
+cgram_lines 1 168 0x56 1CC4
+cgram_lines 1 168 0x58 2506 2D48 39AB 460E 5670 66F4 7799 7FFD
+cgram_lines 1 168 0x62 1061 1CC3
+cgram_lines 1 168 0x65 2D45
+cgram_lines 1 168 0x67 3DC9 3DEC 462E
+cgram_lines 1 168 0x6B 49EC 5AB1
+cgram_lines 1 168 0x6E 7378
+cgram_lines 1 168 0x72 1482 20E4 2D26 2D46 45AA 522D 41EA 460C 62B1 5AB1 6F35 6F56 7BBA 7BDB
+
+rule tiles winter-treeback
+scope tiles
+tilepack treeback.ktp
+cgram_lines 1 168 0x51 14A3 1CE6 2D25 3168 4DEA
+cgram_lines 1 168 0x57 626D 462F
+cgram_lines 1 168 0x5D 7357
+cgram_lines 1 168 0x61 2525 51A8 3187 4DEA 626D 4E6C 5EF1 6732 7353 7377 7798 77BA 7BDB 7FDC 7FFD
+cgram_lines 1 168 0x71 18E6 2D27 4DA9 3187 626D 4A6D
+cgram_lines 1 168 0x78 6AF2
+cgram_lines 1 168 0x7A 6F77 7399 77BB 779A
+
+rule tiles winter-canopy
+scope tiles
+tilepack canopy.ktp
+cgram_lines 1 168 0x31 14A2 1CE3 2525 3587 41E9 6B35 6F57
+cgram_lines 1 168 0x3D 7BDC
+
